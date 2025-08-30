@@ -24,6 +24,11 @@ public class Usuario {
     private LocalDateTime dataCadastro = LocalDateTime.now();
     private boolean ativo = true;
 
+    public Usuario() {
+        // construtor vazio exigido pelo JPA
+    }
+
+
     public Usuario(long id, String nome, String cpf, String telefone, String email, String senha, LocalDateTime dataCadastro, boolean ativo) {
         this.id = id;
         this.nome = nome;
