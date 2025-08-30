@@ -2,6 +2,7 @@ package br.com.carlos.usuario;
 
 
 import br.com.carlos.usuario.UsuarioRepository.UsuarioRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -36,5 +37,15 @@ import java.util.List;
                     .orElse(ResponseEntity.notFound().build());
         }
 
-
+        // DELETE http://localhost:8080/usuarios/{id}
+        @DeleteMapping("/deletar/{id}")
+        public ResponseEntity<String> deletarUsuario(@PathVariable Long id) {
+            if (usuarioRepository.existsById(id)) {
+                usuarioRepository.deleteById(id);
+                return ResponseEntity.ok("Usuário com ID " + id + " foi deletado com sucesso!");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Usuário com ID " + id + " não encontrado.");
+            }
+        }git
     }
