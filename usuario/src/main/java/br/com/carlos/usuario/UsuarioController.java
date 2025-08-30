@@ -47,5 +47,20 @@ import java.util.List;
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body("Usuário com ID " + id + " não encontrado.");
             }
-        }git
+        }
+        // Atualizar por ID
+        @PutMapping("/atualiza/{id}")
+        public ResponseEntity<Usuario> atualizarPorId(@PathVariable Long id, @RequestBody Usuario usuarioAtualizado) {
+            return usuarioRepository.findById(id)
+                    .map(usuario -> {
+                        usuario.setNome(usuarioAtualizado.getNome());
+                        usuario.setCpf(usuarioAtualizado.getCpf());
+                        usuario.setTelefone(usuarioAtualizado.getTelefone());
+                        usuario.setEmail(usuarioAtualizado.getEmail());
+                        usuario.setSenha(usuarioAtualizado.getSenha());
+                        usuario.setAtivo(usuarioAtualizado.isAtivo());
+                        return ResponseEntity.ok(usuarioRepository.save(usuario));
+                    })
+                    .orElse(ResponseEntity.notFound().build());
+        }
     }
